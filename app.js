@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+engine = require('ejs-mate');
+app.engine('ejs', engine);
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const path = require("path");
@@ -25,6 +27,10 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
+
+// app.use((req,res)=>{
+//   res.render("layouts/bplate.ejs");
+// })
 
 app.get("/listings", async (req, res) => {
   const alllistings = await Listing.find({});
