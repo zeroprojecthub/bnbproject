@@ -1,7 +1,7 @@
-const express = require("express");
-const app = express();
-engine = require('ejs-mate');
-app.engine('ejs', engine);
+const express = require('express'),
+  engine = require('ejs-mate'),
+  app = express();
+
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const path = require("path");
@@ -22,16 +22,24 @@ async function main() {
   await mongoose.connect(MONGO_URL);
 }
 
+app.engine('ejs', engine);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
 
-// app.use((req,res)=>{
-//   res.render("layouts/bplate.ejs");
-// })
+app.use((req, res,next) => {
+  console.log('its middleware');
+  // res.render("This is middlware");
+  next();
+})
 
+
+app.get('/', (req, res) => {
+  console.log('Home root');
+  res.render('layouts/bplate.ejs');
+})
 app.get("/listings", async (req, res) => {
   const alllistings = await Listing.find({});
   res.render("listings/index.ejs", { alllistings });
@@ -84,6 +92,6 @@ app.delete("/listings/:id", async (req, res) => {
   res.redirect("/listings");
 });
 
-app.listen(8080, () => {
-  console.log("server is listening to port 8080");
+app.listen(8000, () => {
+  console.log("server is listening to port 8000");
 });

@@ -9,20 +9,21 @@
 </head>
 
 <body>
-  
-  <% layout('layouts/bplate') -%>
-  <h3>All Listings</h3>
 
-  <form method="GET" action="/listings/new">
-    <button>Create New Listing</button>
-  </form>
-  <ul>
-    <% for(let listing of alllistings) { %>
-      <li><a href="/listings/<%= listing._id %>">
-          <%= listing.title %>
-        </a></li>
-      <% } %>
-  </ul>
+  <!-- <% layout('layouts/bplate') -%> -->
+    <h3>All Listings</h3>
+
+    <form method="GET" action="/listings/new">
+      <button>Create New Listing</button>
+    </form>
+
+    <ul>
+      <% for(let listing of alllistings) { %>
+        <li><a href="/listings/<%= listing._id %>">
+            <%= listing.title %>
+          </a></li>
+        <% } %>
+    </ul>
 
 
 </body>
